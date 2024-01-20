@@ -150,7 +150,16 @@ do{
             }
         }
 
-        bool nenhumCaoAchado = true;
+         string[] procuraCao =  caracteristicasCao.Split(",");
+        for(int i = 0; i < procuraCao.Length; i++ )
+        {
+            procuraCao[i] = procuraCao[i].Trim(); 
+        }
+
+        Array.Sort(procuraCao);
+        string[] iconeProcura = {" |"}, " /", "--", " \\", " *"};
+
+        bool algumCaoAchado = false;
         string descricaoCao = "";
 
         //laço para encontrar o cão
@@ -162,19 +171,52 @@ do{
                 if(achadoCao == true)
                 {
                     descricaoCao = nossoAnimais[i, 4] + "\n" + nossoAnimais[i, 5];
+                    bool achadoCaes = false;
+
+                    foreach(string termo in procuraCao)
+                    {
+                        if(termo != null && termo.trim() !- "")
+                        {
+                            for(int j = 0; j > -1; j--)
+                            {
+                                foreach (string icones in iconeProcura)
+                                {
+                                    Console.Write($"\r procura do nosso cao {nossoAnimais[i, 3]} for {termo.Trim()} {icone} {j.ToString()}");
+                                    Thread.Sleep(100);
+                                }
+
+                                Console.Write($"\r{new Sring(' ', Console.BufferWidth)}");
+                            }
+                            if (descricaoCao.Contains(" " + termo.Trim() + " "))
+                            {
+
+                                Console.WriteLine($"\rNosso cao {nossoAnimais[i, 3]} foi encontrado na busca {termo.Trim()} ");
+
+                                achadoCaes = true;
+                                
+                            }
+                        }
+                    }
 
                     if (descricaoCao.Contains(caracteristicasCao))
                     {
                         Console.WriteLine($"\nNosso cao {nossoAnimais[i, 3]} foi encontrado!");
                         Console.WriteLine(descricaoCao);
 
-                        nenhumCaoAchado = false;
+                        achadoCaes = true;
+                        algumCaoAchado = true;
                     }
                 }
             }
-        }
 
-        if(nenhumCaoAchado)
+            if (achadoCaes)
+            {
+                Console.WriteLine($"\r{nossoAnimais[i, 3]} ({nossoAnimais[i, 0]})\n {descricaoCao}\n");
+            }
+        }
+    }
+
+        if(!algumCaoAchado)
         {
             Console.WriteLine("Nenhum dos nossos ca~es foir achado" + caracteristicasCao);
         }
